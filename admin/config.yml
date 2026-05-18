@@ -1,0 +1,91 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "settings"
+    label: "Website Settings"
+    files:
+      - name: "content"
+        label: "Website Content"
+        file: "content.json"
+        format: json
+        fields:
+          - label: "Menu URL"
+            name: menuUrl
+            widget: string
+            hint: "External link for the Menu button (e.g. https://si-lounge.ro/meniu or a PDF URL)"
+
+          - label: "Contact Information"
+            name: contact
+            widget: object
+            fields:
+              - { label: "Email", name: email, widget: string }
+              - { label: "Phone", name: phone, widget: string }
+              - label: "WhatsApp Number"
+                name: whatsapp
+                widget: string
+                hint: "International format without + sign (e.g. 40733541815)"
+              - { label: "Address", name: address, widget: string }
+              - { label: "Hours", name: hours, widget: string }
+              - { label: "Instagram URL", name: instagram, widget: string }
+              - { label: "Facebook URL", name: facebook, widget: string }
+
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            fields:
+              - label: "Headline HTML"
+                name: headline
+                widget: string
+                hint: "You can use <em>italic</em> and <br> for line breaks"
+              - { label: "Sub-text", name: subtext, widget: string }
+              - label: "Background Image"
+                name: image
+                widget: image
+                hint: "Recommended: full-width photo, min 1920px wide"
+
+          - label: "About Section"
+            name: about
+            widget: object
+            fields:
+              - label: "Heading HTML"
+                name: heading
+                widget: string
+                hint: "You can use <em>italic</em> and <br> for line breaks"
+              - { label: "Body Text", name: body, widget: text }
+              - label: "Photo"
+                name: image
+                widget: image
+
+          - label: "Gallery"
+            name: gallery
+            widget: list
+            label_singular: "Photo"
+            fields:
+              - label: "Photo"
+                name: src
+                widget: image
+              - label: "Caption / Alt text"
+                name: alt
+                widget: string
+                hint: "Describe the photo for accessibility and SEO"
+
+          - label: "Partners"
+            name: partners
+            widget: list
+            label_singular: "Partner"
+            fields:
+              - { label: "Partner Name", name: name, widget: string }
+              - label: "Logo Image"
+                name: logo
+                widget: image
+                required: false
+                hint: "Optional. Transparent PNG or SVG works best"
+              - label: "Website URL"
+                name: url
+                widget: string
+                required: false

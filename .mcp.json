@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "higgsfield-openclaw": {
+      "type": "http",
+      "url": "https://mcp.higgsfield.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer oat_OTBBPVECD3MTMWW4J7RDFSCTWCMFVTCW"
+      }
+    }
+  }
+}

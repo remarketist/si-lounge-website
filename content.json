@@ -1,0 +1,40 @@
+{
+  "menuUrl": "https://www.si-lounge.ro/meniu",
+  "contact": {
+    "email": "georgiana@si-lounge.ro",
+    "phone": "+40 733 541 815",
+    "whatsapp": "40733541815",
+    "address": "Str. George Constantinescu 2-4, București, Romania",
+    "hours": "Restaurant: Mon–Sun 12:00 – 23:00 | Events: by reservation",
+    "instagram": "https://www.instagram.com/si_lounge/",
+    "facebook": "https://www.facebook.com/silounge"
+  },
+  "hero": {
+    "headline": "Indoor. Outdoor.<br><em>Completely</em><br>Unforgettable.",
+    "subtext": "Si-Lounge — an urban venue vibrating with life, freedom, and a deep sense of well-being. Rain or shine.",
+    "image": "images/hero banner background.jpg"
+  },
+  "about": {
+    "heading": "A Jewel in the<br>Heart of <em>Bucharest</em>",
+    "body": "An urban-friendly concept that vibrates with life, freedom, and a deep sense of well-being. Whether gathered around our restaurant tables or out under the open sky, every corner of Si-Lounge is built for moments worth remembering.",
+    "image": "images/jewel in the heart of bucharest.png"
+  },
+  "gallery": [
+    { "src": "images/si lounge interior.jpg", "alt": "Si-Lounge interior" },
+    { "src": "images/the shared garden.jpg", "alt": "The shared garden" },
+    { "src": "images/carousel bar.jpg", "alt": "Carousel bar" },
+    { "src": "images/not just a venue.png", "alt": "Not just a venue" },
+    { "src": "images/corporate.png", "alt": "Corporate event" },
+    { "src": "images/weddings.png", "alt": "Wedding at Si-Lounge" },
+    { "src": "images/jewel in the heart of bucharest.png", "alt": "Jewel of Bucharest" },
+    { "src": "images/99a37bb0-6cf6-44bb-9375-e6b65b87a575.jpg", "alt": "Si-Lounge moments" }
+  ],
+  "partners": [
+    { "name": "Partner One", "logo": "", "url": "" },
+    { "name": "Partner Two", "logo": "", "url": "" },
+    { "name": "Partner Three", "logo": "", "url": "" },
+    { "name": "Partner Four", "logo": "", "url": "" },
+    { "name": "Partner Five", "logo": "", "url": "" },
+    { "name": "Partner Six", "logo": "", "url": "" }
+  ]
+}
