@@ -1,5 +1,5 @@
 [build]
-  publish = "."
+  publish = "dist"
 
 [[redirects]]
   from = "/admin"
@@ -17,3 +17,7 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Form submissions will be forwarded to hello@si-lounge.com
+# To finish setup: go to Netlify Dashboard → Forms → contact → Notifications → Add notification → Email → hello@si-lounge.com
+# Or set it up via CLI: netlify forms:notify --form contact --email hello@si-lounge.com

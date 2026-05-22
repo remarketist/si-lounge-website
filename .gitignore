@@ -1,0 +1,18 @@
+# Backups
+backups/
+*.bak
+*.broken*
+*.artifact.json
+
+# Screenshots
+*Screenshot*
+
+# Old versions
+si-lounge-website.backup*
+si-lounge-website-self-contained*
+si-lounge-website-email*
+
+# Generated
+si lounge instagram_circle_logo.png
+mpfccso1-logo-minageorge_2x.svg
+si-lounge-website.html.broken-1553
