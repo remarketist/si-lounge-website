@@ -1,12 +1,159 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Si-Lounge — Content Manager</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Si-Lounge — Content Editor</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Cormorant+SC:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font: 300 15px/1.6 'DM Sans', system-ui, sans-serif; background: #F9F7F3; color: #1A1714; padding: 2rem; -webkit-font-smoothing: antialiased; }
+    h1 { font-family: 'Cormorant SC', serif; font-size: 1.4rem; letter-spacing: 0.15em; font-weight: 300; margin-bottom: 0.25rem; }
+    p.sub { color: #7A6E65; margin-bottom: 2rem; font-size: 0.9rem; }
+    label { display: block; font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 400; color: #5E534B; margin-bottom: 0.3rem; text-transform: uppercase; }
+    input, textarea, select { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DDD3C0; border-radius: 4px; font: inherit; background: #fff; margin-bottom: 1rem; }
+    textarea { min-height: 80px; resize: vertical; }
+    .section { background: #fff; border: 1px solid #EBE3D4; border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .section h2 { font-family: 'Cormorant SC', serif; font-size: 0.85rem; letter-spacing: 0.15em; font-weight: 400; color: #9A6E2E; margin-bottom: 1rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    .btn { padding: 0.85rem 2rem; border: none; border-radius: 4px; font-family: 'Cormorant SC', serif; font-size: 0.8rem; letter-spacing: 0.15em; cursor: pointer; transition: background 0.2s; }
+    .btn-primary { background: #9A6E2E; color: #fff; }
+    .btn-primary:hover { background: #B8864A; }
+    .btn-secondary { background: #EBE3D4; color: #3D3530; }
+    .btn-secondary:hover { background: #DDD3C0; }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #1A1714; color: #F9F7F3; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.85rem; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    @media (max-width: 768px) { .row, .row-3 { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <h1>Si-Lounge Content Editor</h1>
+  <p class="sub">Edit text fields below. When done, click "Download content.json" and upload the file to your site folder.</p>
+  <div id="form"></div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="downloadJson()">Download content.json</button>
+    <button class="btn btn-secondary" onclick="resetForm()">Reset to original</button>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script>
+    let originalData = null;
+
+    function load() {
+      fetch('../content.json?' + Date.now())
+        .then(r => r.json())
+        .then(data => { originalData = JSON.parse(JSON.stringify(data)); buildForm(data); })
+        .catch(() => { document.getElementById('form').innerHTML = '<p style="color:#b44">Could not load content.json. Make sure the file is in the site root folder.</p>'; });
+    }
+
+    function buildForm(data) {
+      var html = '';
+
+      // Hero
+      html += '<div class="section"><h2>Hero Section</h2>';
+      html += '<label>Headline (use &lt;em&gt; for italic)</label><textarea id="f_hero.headline" rows="2">' + esc(data.hero.headline) + '</textarea>';
+      html += '<label>Subtext</label><textarea id="f_hero.subtext" rows="2">' + esc(data.hero.subtext) + '</textarea>';
+      html += '</div>';
+
+      // About
+      html += '<div class="section"><h2>About Section</h2>';
+      html += '<label>Heading</label><textarea id="f_about.heading" rows="2">' + esc(data.about.heading) + '</textarea>';
+      html += '<label>Body</label><textarea id="f_about.body" rows="3">' + esc(data.about.body) + '</textarea>';
+      html += '</div>';
+
+      // Contact
+      html += '<div class="section"><h2>Contact Info</h2>';
+      html += '<div class="row">';
+      html += '<div><label>Email</label><input id="f_contact.email" value="' + esc(data.contact.email) + '"></div>';
+      html += '<div><label>Phone</label><input id="f_contact.phone" value="' + esc(data.contact.phone) + '"></div>';
+      html += '</div>';
+      html += '<div class="row">';
+      html += '<div><label>WhatsApp (digits only)</label><input id="f_contact.whatsapp" value="' + esc(data.contact.whatsapp) + '"></div>';
+      html += '<div><label>Address</label><input id="f_contact.address" value="' + esc(data.contact.address) + '"></div>';
+      html += '</div>';
+      html += '<label>Hours</label><input id="f_contact.hours" value="' + esc(data.contact.hours) + '">';
+      html += '<div class="row">';
+      html += '<div><label>Instagram URL</label><input id="f_contact.instagram" value="' + esc(data.contact.instagram) + '"></div>';
+      html += '<div><label>Facebook URL</label><input id="f_contact.facebook" value="' + esc(data.contact.facebook) + '"></div>';
+      html += '</div></div>';
+
+      // Menu URL
+      html += '<div class="section"><h2>Menu Link</h2>';
+      html += '<label>Menu URL</label><input id="f_menuUrl" value="' + esc(data.menuUrl) + '"></div>';
+
+      // Popup
+      html += '<div class="section"><h2>Startup Popup</h2>';
+      html += '<label>Popup Image Path</label><input id="f_popupImage" value="' + esc(data.popupImage) + '"></div>';
+
+      // Upcoming Events
+      html += '<div class="section"><h2>Upcoming Events Sidebar</h2>';
+      (data.upcomingEvents || []).forEach(function(ev, i) {
+        html += '<div class="row"><div><label>Event ' + (i+1) + ' Title</label><input id="f_evt' + i + '_title" value="' + esc(ev.title) + '"></div>';
+        html += '<div><label>Date</label><input id="f_evt' + i + '_date" value="' + esc(ev.date) + '"></div></div>';
+        html += '<div class="row" style="margin-top:-0.5rem"><div><label>Image Path</label><input id="f_evt' + i + '_img" value="' + esc(ev.image) + '"></div></div>';
+      });
+      html += '</div>';
+
+      // Partners
+      html += '<div class="section"><h2>Partners</h2>';
+      var phtml = '';
+      (data.partners || []).forEach(function(p, i) {
+        phtml += '<div class="row" style="align-items:end"><div><label>Partner ' + (i+1) + ' Name</label><input id="f_part' + i + '_name" value="' + esc(p.name) + '"></div>';
+        phtml += '<div><label>Logo Path</label><input id="f_part' + i + '_logo" value="' + esc(p.logo) + '"></div></div>';
+      });
+      html += phtml + '</div>';
+
+      document.getElementById('form').innerHTML = html;
+    }
+
+    function collectData() {
+      var d = JSON.parse(JSON.stringify(originalData));
+      d.hero.headline = val('f_hero.headline');
+      d.hero.subtext = val('f_hero.subtext');
+      d.about.heading = val('f_about.heading');
+      d.about.body = val('f_about.body');
+      d.contact.email = val('f_contact.email');
+      d.contact.phone = val('f_contact.phone');
+      d.contact.whatsapp = val('f_contact.whatsapp');
+      d.contact.address = val('f_contact.address');
+      d.contact.hours = val('f_contact.hours');
+      d.contact.instagram = val('f_contact.instagram');
+      d.contact.facebook = val('f_contact.facebook');
+      d.menuUrl = val('f_menuUrl');
+      d.popupImage = val('f_popupImage');
+      (d.upcomingEvents || []).forEach(function(ev, i) {
+        ev.title = val('f_evt' + i + '_title');
+        ev.date = val('f_evt' + i + '_date');
+        ev.image = val('f_evt' + i + '_img');
+      });
+      (d.partners || []).forEach(function(p, i) {
+        p.name = val('f_part' + i + '_name');
+        p.logo = val('f_part' + i + '_logo');
+      });
+      return d;
+    }
+
+    function downloadJson() {
+      var data = collectData();
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'content.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast('content.json downloaded! Replace the file in your site folder and re-deploy.');
+    }
+
+    function resetForm() {
+      if (originalData) buildForm(originalData);
+    }
+
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+    function toast(msg) { var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(function() { t.classList.remove('show'); }, 3500); }
+
+    load();
+  </script>
 </body>
 </html>

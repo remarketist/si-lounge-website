@@ -12,7 +12,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+SC:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     /* ═══ TOKENS ═══════════════════════════════════════════════════════ */
     :root {
@@ -894,9 +893,7 @@
         <h2 class="sec-title" style="font-size:clamp(1.6rem,3vw,2.6rem);margin-bottom:0.4rem" data-en="Get in Touch" data-ro="Ia Legătura">Get in Touch</h2>
         <p style="color:var(--muted);margin-bottom:1.8rem;max-width:480px" data-en="Whether you're planning a private event, corporate gathering, or just a dinner reservation — fill in the form and we'll get back to you within 24 hours." data-ro="Fie că planificați un eveniment privat, o reuniune corporativă sau doar o rezervare la cină — completați formularul și vă vom răspunde în maximum 24 de ore.">Whether you're planning a private event, corporate gathering, or just a dinner reservation — fill in the form and we'll get back to you within 24 hours.</p>
         <h3 class="cf-title" data-en="Tell Us About Your Event" data-ro="Spune-ne Despre Evenimentul Tău">Tell Us About Your Event</h3>
-        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contactForm">
-          <input type="hidden" name="form-name" value="contact" />
-          <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <form name="contact" method="POST" action="/contact-form" id="contactForm">
           <div class="frow">
             <div class="fg"><label class="flbl" for="fname" data-en="First Name" data-ro="Prenume">First Name</label><input class="finput" type="text" id="fname" name="first-name" placeholder="Your name" data-en="Your name" data-ro="Numele tău" required></div>
             <div class="fg"><label class="flbl" for="lname" data-en="Last Name" data-ro="Nume">Last Name</label><input class="finput" type="text" id="lname" name="last-name" placeholder="Last name" data-en="Last name" data-ro="Numele de familie"></div>
@@ -1202,11 +1199,11 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       const data = new FormData(form);
-      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
-        .then(r => { if (r.ok || r.redirected) { form.style.display = 'none'; const s = document.getElementById('formSuccess'); if (s) s.style.display = 'block'; } else { fallbackSubmit(data); } })
+      fetch('/contact-form', { method: 'POST', body: data })
+        .then(r => { if (r.ok) { form.style.display = 'none'; const s = document.getElementById('formSuccess'); if (s) s.style.display = 'block'; } else { fallbackSubmit(data); } })
         .catch(() => { fallbackSubmit(data); });
       function fallbackSubmit(d) {
-        var email = 'hello@si-lounge.com';
+        var email = 'georgiana@si-lounge.ro';
         var msg = Array.from(d.entries()).map(function(e){ return encodeURIComponent(e[0])+'='+encodeURIComponent(e[1]); }).join('&amp;');
         var fallbackDiv = document.getElementById('formSuccess');
         if (fallbackDiv) {
@@ -1255,7 +1252,6 @@
   const co = new IntersectionObserver(e => e.forEach(e => { if (!e.isIntersecting) return; const el = e.target, t = +el.dataset.count, t0 = performance.now(); const go = n => { const p = Math.min((n-t0)/1800,1), ep = 1-Math.pow(1-p,3); el.textContent = Math.round(ep*t); if(p<1) requestAnimationFrame(go); }; requestAnimationFrame(go); co.unobserve(el); }), { threshold: 0.5 });
   document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
 
-  if (window.netlifyIdentity) window.netlifyIdentity.on('init', u => { if (!u) window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; }); });
 </script>
 </body>
 </html>
