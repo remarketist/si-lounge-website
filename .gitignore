@@ -28,3 +28,10 @@ admin/
 images/
 functions/
 _redirects
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
