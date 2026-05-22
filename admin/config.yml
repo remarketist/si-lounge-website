@@ -89,3 +89,13 @@ collections:
                 name: url
                 widget: string
                 required: false
+
+          - label: "Upcoming Events Sidebar"
+            name: upcomingEvents
+            widget: list
+            label_singular: "Event"
+            fields:
+              - { label: "Title", name: title, widget: string }
+              - { label: "Date", name: date, widget: string, hint: "e.g. JUN 14 · 2025" }
+              - { label: "Image", name: image, widget: image }
+              - { label: "Link URL", name: link, widget: string, required: false }
