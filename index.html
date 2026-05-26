@@ -366,6 +366,21 @@
       .mob-nav .mob-nav-toggles .theme-toggle { display: flex; }
       .mob-nav .lang-toggle { color: var(--fg); border-color: var(--border); }
       .mob-nav .theme-toggle { color: var(--muted); border-color: var(--border); }
+      /* restaurant section mobile: match outdoor section stacking */
+      .restaurant-sec { padding: 3rem 0; }
+      .rest-stack { padding-bottom: 0; }
+      .rest-accent { display: none; }
+      /* WhatsApp bottom bar icon: path uses fill not stroke */
+      .mbb-item.mbb-wa svg { stroke: none; fill: currentColor; }
+      /* event type cards: left-to-right scroll carousel */
+      .ev-img-grid {
+        display: flex; gap: 1rem; overflow-x: auto;
+        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        padding: 0 1.5rem 1rem; margin-left: -1.5rem; margin-right: -1.5rem;
+        scrollbar-width: none; margin-top: 2rem;
+      }
+      .ev-img-grid::-webkit-scrollbar { display: none; }
+      .ev-img-card { flex: 0 0 82vw; scroll-snap-align: start; aspect-ratio: 3/4; border-radius: 8px; }
     }
     @media (max-width: 480px) {
       .ev-grid { grid-template-columns: 1fr; }
@@ -530,8 +545,8 @@
   <a href="#events" onclick="closeMob()" data-en="Events" data-ro="Evenimente">Events</a>
   <a href="#contact" onclick="closeMob()" data-en="Contact" data-ro="Contact">Contact</a>
   <a href="blog.html" onclick="closeMob()" data-en="Blog" data-ro="Blog">Blog</a>
-  <a href="https://app.greet.menu/menu/EUBbkZdHaDGboVaH" id="mob-menu-link" class="btn btn-primary" style="margin-top:1rem" target="_blank" rel="noopener" data-en="View Menu " data-ro="Vezi Meniu ">View Menu </a>
-  <a href="https://ialoc.ro/restaurante-bucuresti/si-lounge-contemporary-social-rezervari-3268?brid=YWdncwHnyDjg7sShJ1c7VzfIT7wJ&experience=focus" class="btn-reserve-solid" style="margin-top:0.5rem;display:inline-block;padding:0.85rem 2rem;border-radius:3px;font-family:var(--font-sc);font-size:0.8rem;letter-spacing:0.22em" target="_blank" rel="noopener" data-en="Reservations " data-ro="Rezervări ">Reservations </a>
+  <a href="https://app.greet.menu/menu/EUBbkZdHaDGboVaH" id="mob-menu-link" class="btn btn-primary" style="margin-top:1rem;width:80%;max-width:280px;text-align:center;display:block" target="_blank" rel="noopener" data-en="View Menu" data-ro="Vezi Meniu">View Menu</a>
+  <a href="https://ialoc.ro/restaurante-bucuresti/si-lounge-contemporary-social-rezervari-3268?brid=YWdncwHnyDjg7sShJ1c7VzfIT7wJ&experience=focus" class="btn btn-primary" style="margin-top:0.5rem;width:80%;max-width:280px;text-align:center;display:block;background:#B22222" target="_blank" rel="noopener" data-en="Reservations" data-ro="Rezervări">Reservations</a>
   <div class="mob-nav-toggles">
     <button class="lang-toggle" id="mobLangToggle">RO</button>
     <button class="theme-toggle" id="mobThemeToggle" title="Toggle dark/light mode">
