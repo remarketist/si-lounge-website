@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Si-Lounge — Content Editor</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f3ef;color:#1a1714;line-height:1.5}
+    .topbar{background:#1a1714;color:#f2ede4;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+    .topbar h1{font-size:1.05rem;font-weight:500;letter-spacing:0.02em}
+    .topbar .sub{font-size:0.72rem;color:rgba(242,237,228,0.45);margin-top:2px}
+    .dl-btn{background:#9a6e2e;border:none;color:#fff;padding:0.6rem 1.5rem;border-radius:3px;font-size:0.85rem;cursor:pointer;font-weight:500;white-space:nowrap}
+    .dl-btn:hover{background:#b8864a}
+    .container{max-width:980px;margin:0 auto;padding:1.5rem 2rem}
+    .sec{background:#fff;border-radius:8px;padding:1.5rem 1.75rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,0.07)}
+    .sec-hd{font-size:0.82rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#9a6e2e;margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #ede8df}
+    .fld{margin-bottom:0.85rem}
+    .fld label{display:block;font-size:0.75rem;font-weight:600;color:#666;margin-bottom:0.2rem;letter-spacing:0.03em}
+    .fld label .ro{color:#a07850}
+    input[type=text],textarea,select{width:100%;padding:0.45rem 0.65rem;border:1px solid #ddd;border-radius:4px;font-size:0.88rem;font-family:inherit;background:#fafafa;color:#1a1714;transition:border-color 0.15s}
+    input[type=text]:focus,textarea:focus{outline:none;border-color:#9a6e2e;box-shadow:0 0 0 2px rgba(154,110,46,0.12);background:#fff}
+    textarea{min-height:72px;resize:vertical}
+    textarea.tall{min-height:100px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .row2 .fld:last-child label{color:#a07850}
+    .subcard{background:#faf9f6;border:1px solid #ece7de;border-radius:6px;padding:1rem;margin-bottom:0.75rem}
+    .subcard-hd{font-size:0.78rem;font-weight:700;color:#9a6e2e;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em}
+    .glry-note{font-size:0.72rem;color:#888;margin-bottom:0.4rem}
+    .gallery-area{width:100%;min-height:80px;font-size:0.8rem;font-family:'Courier New',monospace;background:#f9f7f4;border:1px solid #ddd;border-radius:4px;padding:0.5rem;resize:vertical}
+    .hint{font-size:0.72rem;color:#aaa;margin-top:0.25rem}
+    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1714;color:#f2ede4;padding:0.85rem 1.75rem;border-radius:6px;font-size:0.85rem;box-shadow:0 4px 20px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.25s;pointer-events:none;z-index:200}
+    .toast.show{opacity:1}
+    @media(max-width:700px){.row2{grid-template-columns:1fr}.topbar{gap:0.75rem}}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>Si-Lounge Content Editor</h1>
+    <div class="sub">Edit any field → Download content.json → Replace file in dist/ → Redeploy to Cloudflare</div>
+  </div>
+  <button class="dl-btn" onclick="download()">📥 Download content.json</button>
+</div>
+
+<div class="container">
+
+  <!-- ── SITE LINKS ─────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Site Settings</div>
+    <div class="row2">
+      <div class="fld"><label>Menu URL</label><input type="text" id="menuUrl" value="https://app.greet.menu/menu/EUBbkZdHaDGboVaH"></div>
+      <div class="fld"><label>Reservations URL</label><input type="text" id="reservationsUrl" value="https://ialoc.ro/restaurante-bucuresti/si-lounge-contemporary-social-rezervari-3268?brid=YWdncwHnyDjg7sShJ1c7VzfIT7wJ&experience=focus"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Popup Image (path)</label><input type="text" id="popupImage" value="images/la vita e bella pop up.jpg"></div>
+      <div class="fld"><label>Web3Forms Access Key</label><input type="text" id="web3formsKey" value="d41bbced-c9da-4d6b-8bea-946c971e6f94"></div>
+    </div>
+  </div>
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Hero Section</div>
+    <div class="row2">
+      <div class="fld"><label>Headline <span class="ro">EN</span></label><input type="text" id="hero_headline_en" value="A Jewel in the&lt;br&gt;Heart of &lt;em&gt;Bucharest&lt;/em&gt;"></div>
+      <div class="fld"><label>Headline <span class="ro">RO</span></label><input type="text" id="hero_headline_ro" value="O Bijuterie în&lt;br&gt;Inima &lt;em&gt;Bucureștiului&lt;/em&gt;"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Subtext <span class="ro">EN</span></label><textarea id="hero_subtext_en">An indoor-outdoor venue vibrating with life, freedom, and a deep sense of beauty.</textarea></div>
+      <div class="fld"><label>Subtext <span class="ro">RO</span></label><textarea id="hero_subtext_ro">Un spațiu interior-exterior care vibrează de viață, libertate și frumusețe.</textarea></div>
+    </div>
+    <div class="fld"><label>Background Image</label><input type="text" id="hero_image" value="images/garden jewel in the heart of bucharest.jpeg"></div>
+  </div>
+
+  <!-- ── ABOUT / VENUE ─────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">About / Venue Section</div>
+    <div class="row2">
+      <div class="fld"><label>Heading <span class="ro">EN</span></label><input type="text" id="about_heading_en" value="An Indoor · Outdoor&lt;br&gt;&lt;em&gt;Urban Venue&lt;/em&gt;"></div>
+      <div class="fld"><label>Heading <span class="ro">RO</span></label><input type="text" id="about_heading_ro" value="Un Spațiu&lt;br&gt;&lt;em&gt;Interior · Exterior&lt;/em&gt;"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Body <span class="ro">EN</span></label><textarea class="tall" id="about_body_en">An urban-friendly concept that vibrates with life, freedom, and a deep sense of well-being. Whether gathered around our restaurant tables or out under the open sky, every corner of Si-Lounge is built for moments worth remembering.</textarea></div>
+      <div class="fld"><label>Body <span class="ro">RO</span></label><textarea class="tall" id="about_body_ro">Un concept urban care vibrează de viață, libertate și o profundă stare de bine. Fie la mesele restaurantului, fie sub cerul liber, fiecare colț al Si-Lounge este creat pentru momente de neuitat.</textarea></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>BA Indoor Image (drag right)</label><input type="text" id="about_baIndoorImage" value="images/si-lounge-59.jpg"></div>
+      <div class="fld"><label>BA Outdoor Image (drag left)</label><input type="text" id="about_baOutdoorImage" value="images/garden jewel in the heart of bucharest.jpeg"></div>
+    </div>
+
+    <div class="subcard">
+      <div class="subcard-hd">Venue Feature Bullets (6 items)</div>
+      <div class="row2">
+        <div class="fld"><label>Bullet 1 EN</label><input type="text" id="about_f0_en" value="Restaurant &amp; terrace"></div>
+        <div class="fld"><label>Bullet 1 RO</label><input type="text" id="about_f0_ro" value="Restaurant &amp; terasă"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Bullet 2 EN</label><input type="text" id="about_f1_en" value="Garden access"></div>
+        <div class="fld"><label>Bullet 2 RO</label><input type="text" id="about_f1_ro" value="Acces grădină"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Bullet 3 EN</label><input type="text" id="about_f3_en" value="All-weather ready"></div>
+        <div class="fld"><label>Bullet 3 RO</label><input type="text" id="about_f3_ro" value="Pregătit pentru orice vreme"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Bullet 4 EN</label><input type="text" id="about_f4_en" value="In-house kitchen"></div>
+        <div class="fld"><label>Bullet 4 RO</label><input type="text" id="about_f4_ro" value="Bucătărie proprie"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Bullet 5 EN</label><input type="text" id="about_f5_en" value="Event coordination"></div>
+        <div class="fld"><label>Bullet 5 RO</label><input type="text" id="about_f5_ro" value="Coordonare evenimente"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Bullet 6 EN</label><input type="text" id="about_f6_en" value="Parking on site"></div>
+        <div class="fld"><label>Bullet 6 RO</label><input type="text" id="about_f6_ro" value="Parcare la fața locului"></div>
+      </div>
+    </div>
+
+    <div class="subcard">
+      <div class="subcard-hd">Capacity Table</div>
+      <div class="row2">
+        <div class="fld"><label>Row 1 Label EN</label><input type="text" id="cap_r0_en" value="Indoor Restaurant"></div>
+        <div class="fld"><label>Row 1 Label RO</label><input type="text" id="cap_r0_ro" value="Restaurant Interior"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Row 1 Seated</label><input type="text" id="cap_r0_seated" value="150"></div>
+        <div class="fld"><label>Row 1 Standing</label><input type="text" id="cap_r0_standing" value="300"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Row 2 Label EN</label><input type="text" id="cap_r1_en" value="Garden Terrace"></div>
+        <div class="fld"><label>Row 2 Label RO</label><input type="text" id="cap_r1_ro" value="Terasă Grădină"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Row 2 Seated</label><input type="text" id="cap_r1_seated" value="300"></div>
+        <div class="fld"><label>Row 2 Standing</label><input type="text" id="cap_r1_standing" value="700"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Row 3 Label EN</label><input type="text" id="cap_r2_en" value="Full Venue"></div>
+        <div class="fld"><label>Row 3 Label RO</label><input type="text" id="cap_r2_ro" value="Spațiu Complet"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Row 3 Seated</label><input type="text" id="cap_r2_seated" value="450+"></div>
+        <div class="fld"><label>Row 3 Standing</label><input type="text" id="cap_r2_standing" value="700+"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESTAURANT ─────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">The Restaurant Section</div>
+    <div class="row2">
+      <div class="fld"><label>Section Label EN</label><input type="text" id="rest_label_en" value="The Restaurant"></div>
+      <div class="fld"><label>Section Label RO</label><input type="text" id="rest_label_ro" value="Restaurantul"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Heading EN</label><input type="text" id="rest_heading_en" value="Open Every Day,&lt;br&gt;&lt;em&gt;Always in Season&lt;/em&gt;"></div>
+      <div class="fld"><label>Heading RO</label><input type="text" id="rest_heading_ro" value="Deschis în Fiecare Zi,&lt;br&gt;&lt;em&gt;Mereu în Sezon&lt;/em&gt;"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Body EN</label><textarea class="tall" id="rest_body_en">Si-Lounge restaurant is open daily, welcoming guests for lunch and dinner in a setting that blends elegant indoor dining with the warmth of our outdoor terrace. Our kitchen crafts each dish from seasonal ingredients, creating a menu that changes with the rhythm of the year.</textarea></div>
+      <div class="fld"><label>Body RO</label><textarea class="tall" id="rest_body_ro">Restaurantul Si-Lounge este deschis zilnic, primind oaspeții la prânz și cină într-un cadru care îmbină eleganța interioară cu căldura terasei noastre. Bucătăria noastră creează fiecare preparat din ingrediente de sezon.</textarea></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Background Image</label><input type="text" id="rest_bgImage" value="images/restaurant 3.jpg"></div>
+      <div class="fld"><label>Main Image (large)</label><input type="text" id="rest_mainImage" value="images/restaurant 2.jpg"></div>
+    </div>
+    <div class="subcard">
+      <div class="subcard-hd">Feature Bullets</div>
+      <div class="row2">
+        <div class="fld"><label>1 EN</label><input type="text" id="rest_f0_en" value="Open Mon–Sun"></div>
+        <div class="fld"><label>1 RO</label><input type="text" id="rest_f0_ro" value="Deschis Lun–Dum"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>2 EN</label><input type="text" id="rest_f1_en" value="12:00 – 23:00"></div>
+        <div class="fld"><label>2 RO</label><input type="text" id="rest_f1_ro" value="12:00 – 23:00"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>3 EN</label><input type="text" id="rest_f2_en" value="Seasonal menu"></div>
+        <div class="fld"><label>3 RO</label><input type="text" id="rest_f2_ro" value="Meniu sezonier"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>4 EN</label><input type="text" id="rest_f3_en" value="Private dining"></div>
+        <div class="fld"><label>4 RO</label><input type="text" id="rest_f3_ro" value="Mese private"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>5 EN</label><input type="text" id="rest_f4_en" value="In-house kitchen"></div>
+        <div class="fld"><label>5 RO</label><input type="text" id="rest_f4_ro" value="Bucătărie proprie"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>6 EN</label><input type="text" id="rest_f5_en" value="Parking on site"></div>
+        <div class="fld"><label>6 RO</label><input type="text" id="rest_f5_ro" value="Parcare la fața locului"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GARDEN ─────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">The Garden Section</div>
+    <div class="row2">
+      <div class="fld"><label>Section Label EN</label><input type="text" id="garden_label_en" value="The Garden"></div>
+      <div class="fld"><label>Section Label RO</label><input type="text" id="garden_label_ro" value="Grădina"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Heading EN</label><input type="text" id="garden_heading_en" value="A Private&lt;br&gt;&lt;em&gt;Oasis in the City&lt;/em&gt;"></div>
+      <div class="fld"><label>Heading RO</label><input type="text" id="garden_heading_ro" value="O Oază&lt;br&gt;&lt;em&gt;Privată în Inima Orașului&lt;/em&gt;"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Body EN</label><textarea class="tall" id="garden_body_en">A lush natural escape in the heart of Bucharest — and with our stunning indoor spaces just steps away, your event runs flawlessly regardless of the forecast. Beautiful. And bulletproof.</textarea></div>
+      <div class="fld"><label>Body RO</label><textarea class="tall" id="garden_body_ro">O evadare naturală în inima Bucureștiului — cu spațiile noastre interioare la câțiva pași, evenimentul tău se desfășoară impecabil indiferent de vreme.</textarea></div>
+    </div>
+    <div class="subcard">
+      <div class="subcard-hd">Feature 1 — The Carousel Bar</div>
+      <div class="row2">
+        <div class="fld"><label>Title EN</label><input type="text" id="gf0_title_en" value="The Carousel Bar"></div>
+        <div class="fld"><label>Title RO</label><input type="text" id="gf0_title_ro" value="Barul Carusel"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Description EN</label><textarea id="gf0_desc_en">A visually striking focal point that transforms the outdoor into a cinematic experience unlike any other venue in Bucharest.</textarea></div>
+        <div class="fld"><label>Description RO</label><textarea id="gf0_desc_ro">Un punct focal vizual remarcabil care transformă exteriorul într-o experiență cinematografică unică.</textarea></div>
+      </div>
+    </div>
+    <div class="subcard">
+      <div class="subcard-hd">Feature 2 — Chandeliered Trees</div>
+      <div class="row2">
+        <div class="fld"><label>Title EN</label><input type="text" id="gf1_title_en" value="Chandeliered Trees"></div>
+        <div class="fld"><label>Title RO</label><input type="text" id="gf1_title_ro" value="Copaci cu Candelabre"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Description EN</label><textarea id="gf1_desc_en">Tall trees adorned with suspended chandeliers create a magical canopy — the backdrop your guests will never forget.</textarea></div>
+        <div class="fld"><label>Description RO</label><textarea id="gf1_desc_ro">Copaci înalți cu candelabre suspendate creează un baldachin magic — fundalul pe care oaspeții tăi nu îl vor uita niciodată.</textarea></div>
+      </div>
+    </div>
+    <div class="subcard">
+      <div class="subcard-hd">Feature 3 — Rain or Shine Ready</div>
+      <div class="row2">
+        <div class="fld"><label>Title EN</label><input type="text" id="gf2_title_en" value="Rain or Shine Ready"></div>
+        <div class="fld"><label>Title RO</label><input type="text" id="gf2_title_ro" value="Pregătit pentru Orice Vreme"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Description EN</label><textarea id="gf2_desc_en">Every outdoor moment is backed by a stunning interior. Flexible flow between spaces means your event is never at the mercy of the weather.</textarea></div>
+        <div class="fld"><label>Description RO</label><textarea id="gf2_desc_ro">Fiecare moment în aer liber este completat de un interior spectaculos. Fluxul flexibil între spații înseamnă că evenimentul tău nu depinde niciodată de vreme.</textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EVENTS ─────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Events Section (intro text)</div>
+    <div class="row2">
+      <div class="fld"><label>Section Label EN</label><input type="text" id="ev_label_en" value="Event Types"></div>
+      <div class="fld"><label>Section Label RO</label><input type="text" id="ev_label_ro" value="Tipuri de Evenimente"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Heading EN</label><input type="text" id="ev_heading_en" value="One Address.&lt;br&gt;&lt;em&gt;Every Occasion.&lt;/em&gt;"></div>
+      <div class="fld"><label>Heading RO</label><input type="text" id="ev_heading_ro" value="O Adresă.&lt;br&gt;&lt;em&gt;Fiecare Ocazie.&lt;/em&gt;"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Body EN</label><textarea id="ev_body_en">Whether your vision calls for corporate precision or intimate celebration, Si-Lounge provides the perfect configuration — indoors, outdoors, or both.</textarea></div>
+      <div class="fld"><label>Body RO</label><textarea id="ev_body_ro">Indiferent dacă evenimentul tău necesită precizie corporativă sau intimitate, Si-Lounge oferă configurația perfectă — interior, exterior sau ambele.</textarea></div>
+    </div>
+  </div>
+
+  <!-- ── EVENT CARDS ────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Event Main Cards (Weddings / Corporate / Private)</div>
+
+    <div class="subcard">
+      <div class="subcard-hd">Card 1 — Weddings</div>
+      <div class="fld"><label>Card Image</label><input type="text" id="ec0_image" value="images/weddings.jpg"></div>
+      <div class="row2">
+        <div class="fld"><label>Title EN</label><input type="text" id="ec0_title_en" value="Weddings"></div>
+        <div class="fld"><label>Title RO</label><input type="text" id="ec0_title_ro" value="Nunți"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Note EN</label><textarea id="ec0_note_en">Ceremonies, receptions &amp; civil unions in a cinematic setting.</textarea></div>
+        <div class="fld"><label>Note RO</label><textarea id="ec0_note_ro">Ceremonii, recepții și cununii civile într-un cadru cinematografic.</textarea></div>
+      </div>
+      <div class="fld">
+        <label>Gallery images <span style="font-weight:400;color:#aaa">(one path per line)</span></label>
+        <textarea class="gallery-area" id="ec0_gallery">images/weddings.jpg
+images/weddings/wedding-site-1.jpg
+images/weddings/wedding-site-2.jpg
+images/weddings/wedding-site-5.jpg
+images/weddings/wedding-site-6.jpg
+images/weddings/wedding-site-7.jpg
+images/weddings/wedding-site-8.jpg
+images/weddings/wedding-site-9.jpg
+images/weddings/wedding-site-3.jpg
+images/weddings/poze-wedding-5.jpg
+images/weddings/wedding-36a6.jpg
+images/weddings/about2.jpg
+images/weddings/about3.jpg
+images/0772-Andreea-Mihai-Wedding-photos-Ciprian-Dumitrescu-DCF03240.jpg</textarea>
+        <p class="hint">Add or remove image paths. One path per line. No commas needed.</p>
+      </div>
+    </div>
+
+    <div class="subcard">
+      <div class="subcard-hd">Card 2 — Corporate</div>
+      <div class="fld"><label>Card Image</label><input type="text" id="ec1_image" value="images/corporate.jpeg"></div>
+      <div class="row2">
+        <div class="fld"><label>Title EN</label><input type="text" id="ec1_title_en" value="Corporate"></div>
+        <div class="fld"><label>Title RO</label><input type="text" id="ec1_title_ro" value="Corporate"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Note EN</label><textarea id="ec1_note_en">Flawless setup for conferences, product launches &amp; company galas.</textarea></div>
+        <div class="fld"><label>Note RO</label><textarea id="ec1_note_ro">Organizare impecabilă pentru conferințe, lansări de produse și gale de companie.</textarea></div>
+      </div>
+      <div class="fld">
+        <label>Gallery images <span style="font-weight:400;color:#aaa">(one path per line)</span></label>
+        <textarea class="gallery-area" id="ec1_gallery">images/corporate.jpeg
+images/corporate/CM-242.jpg
+images/corporate/CM-250.jpg
+images/corporate/CM-275.jpg
+images/corporate/CM-249.jpg
+images/corporate/CM-343.jpg
+images/corporate/CM-298.jpg
+images/corporate/CM-551.jpg
+images/corporate/CM-422.jpg
+images/corporate/about1.jpg
+images/corporate/301478776_n.jpg
+images/corporate/66b9789d.jpg
+images/corporate/hero-326.jpg
+images/product launch 1.jpg</textarea>
+      </div>
+    </div>
+
+    <div class="subcard">
+      <div class="subcard-hd">Card 3 — Private Parties</div>
+      <div class="fld"><label>Card Image</label><input type="text" id="ec2_image" value="images/garden crowded.jpg"></div>
+      <div class="row2">
+        <div class="fld"><label>Title EN</label><input type="text" id="ec2_title_en" value="Private Parties"></div>
+        <div class="fld"><label>Title RO</label><input type="text" id="ec2_title_ro" value="Petreceri Private"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Note EN</label><textarea id="ec2_note_en">Birthdays, anniversaries &amp; milestone celebrations done right.</textarea></div>
+        <div class="fld"><label>Note RO</label><textarea id="ec2_note_ro">Zile de naștere, aniversări și momente speciale celebrate cum se cuvine.</textarea></div>
+      </div>
+      <div class="fld">
+        <label>Gallery images <span style="font-weight:400;color:#aaa">(one path per line)</span></label>
+        <textarea class="gallery-area" id="ec2_gallery">images/garden crowded.jpg
+images/concerts 2.jpg
+images/parties/20647214.jpg
+images/parties/5e3cb8c8.jpg
+images/parties/c0e76b22.jpg
+images/parties/IMG_9433.jpg
+images/parties/0b00e086.jpg
+images/parties/27f33918.jpg
+images/parties/34bb01ad.jpg
+images/parties/52d090e3.jpg
+images/parties/88173938_n.jpg
+images/parties/92714654.jpg
+images/parties/93062282.jpg
+images/parties/93478334.jpg</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EVENT SMALL TILES ──────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Event Small Tiles (4 items)</div>
+    <div class="row2">
+      <div class="fld"><label>Tile 1 Name EN</label><input type="text" id="et0_name_en" value="Product Launches"></div>
+      <div class="fld"><label>Tile 1 Name RO</label><input type="text" id="et0_name_ro" value="Lansări de Produse"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 1 Note EN</label><input type="text" id="et0_note_en" value="Brand activations with real visual impact."></div>
+      <div class="fld"><label>Tile 1 Note RO</label><input type="text" id="et0_note_ro" value="Activări de brand cu impact vizual real."></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 2 Name EN</label><input type="text" id="et1_name_en" value="Fashion Shows"></div>
+      <div class="fld"><label>Tile 2 Name RO</label><input type="text" id="et1_name_ro" value="Modă &amp; Runway"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 2 Note EN</label><input type="text" id="et1_note_en" value="Architecture worthy of being your runway."></div>
+      <div class="fld"><label>Tile 2 Note RO</label><input type="text" id="et1_note_ro" value="Arhitectură demnă de a fi pasarela ta."></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 3 Name EN</label><input type="text" id="et2_name_en" value="Concerts &amp; NYE"></div>
+      <div class="fld"><label>Tile 3 Name RO</label><input type="text" id="et2_name_ro" value="Concerte &amp; Revelion"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 3 Note EN</label><input type="text" id="et2_note_en" value="Live events with atmosphere built in."></div>
+      <div class="fld"><label>Tile 3 Note RO</label><input type="text" id="et2_note_ro" value="Evenimente live cu atmosferă garantată."></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 4 Name EN</label><input type="text" id="et3_name_en" value="Workshops"></div>
+      <div class="fld"><label>Tile 4 Name RO</label><input type="text" id="et3_name_ro" value="Workshopuri"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Tile 4 Note EN</label><input type="text" id="et3_note_en" value="Intimate learning environments with character."></div>
+      <div class="fld"><label>Tile 4 Note RO</label><input type="text" id="et3_note_ro" value="Medii de învățare intime, cu personalitate."></div>
+    </div>
+  </div>
+
+  <!-- ── REVIEWS ─────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Reviews Section</div>
+    <div class="row2">
+      <div class="fld"><label>Section Label EN</label><input type="text" id="rev_label_en" value="What Clients Say"></div>
+      <div class="fld"><label>Section Label RO</label><input type="text" id="rev_label_ro" value="Ce Spun Clienții"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Heading EN</label><input type="text" id="rev_heading_en" value="Cherished by&lt;br&gt;&lt;em&gt;Our Guests&lt;/em&gt;"></div>
+      <div class="fld"><label>Heading RO</label><input type="text" id="rev_heading_ro" value="Apreciat de&lt;br&gt;&lt;em&gt;Oaspeții Noștri&lt;/em&gt;"></div>
+    </div>
+    <div class="fld"><label>Background Image</label><input type="text" id="rev_bgImage" value="images/not just a venue.jpeg"></div>
+    <div class="subcard">
+      <div class="subcard-hd">Review 1</div>
+      <div class="row2">
+        <div class="fld"><label>Review Text EN</label><textarea class="tall" id="rev0_text_en">"The location is superb and everything is decorated with impeccable taste. We organised an important event at Si-Lounge and we are thrilled with our choice. Setup, service, quality of food, professionalism of staff — absolutely everything was excellent."</textarea></div>
+        <div class="fld"><label>Review Text RO</label><textarea class="tall" id="rev0_text_ro">"Locația este superbă și totul este decorat cu un gust impecabil. Am organizat un eveniment important la Si-Lounge și suntem încântați de alegerea noastră. Aranjamentul, serviciile, calitatea mâncării, profesionalismul personalului — absolut totul a fost excelent."</textarea></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Author Name</label><input type="text" id="rev0_author" value="Mihai L."></div>
+        <div class="fld"><label>Date EN</label><input type="text" id="rev0_date_en" value="Corporate Event · 2024"></div>
+      </div>
+    </div>
+    <div class="subcard">
+      <div class="subcard-hd">Review 2</div>
+      <div class="row2">
+        <div class="fld"><label>Review Text EN</label><textarea class="tall" id="rev1_text_en">"We gathered all our friends at Si-Lounge for our wedding. You simply can't spoil the cool, relaxed atmosphere of the garden. The food was sensational, and the staff — attention, smiles, dedication, hospitality, professionalism. You were wonderful on the most important day of our lives."</textarea></div>
+        <div class="fld"><label>Review Text RO</label><textarea class="tall" id="rev1_text_ro">"Ne-am adunat toți prietenii la Si-Lounge pentru nuntă. Pur și simplu nu poți strica atmosfera răcoroasă și relaxată a grădinii. Mâncarea a fost senzațională, iar personalul — atenție, zâmbete, dedicare, ospitalitate, profesionalism. Ați fost minunați în cea mai importantă zi a vieții noastre."</textarea></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Author Name</label><input type="text" id="rev1_author" value="J.G. Jenig"></div>
+        <div class="fld"><label>Date EN</label><input type="text" id="rev1_date_en" value="Wedding · 2023"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTACT ─────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Contact Section</div>
+    <div class="row2">
+      <div class="fld"><label>Section Label EN</label><input type="text" id="ct_label_en" value="Get in Touch"></div>
+      <div class="fld"><label>Section Label RO</label><input type="text" id="ct_label_ro" value="Contactează-ne"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Heading EN</label><input type="text" id="ct_heading_en" value="Let's Create&lt;br&gt;&lt;em&gt;Something Memorable&lt;/em&gt;"></div>
+      <div class="fld"><label>Heading RO</label><input type="text" id="ct_heading_ro" value="Să Creăm&lt;br&gt;&lt;em&gt;Ceva Memorabil&lt;/em&gt;"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Intro text EN</label><textarea id="ct_intro_en">Tell us about your event and we'll get back to you within 24 hours.</textarea></div>
+      <div class="fld"><label>Intro text RO</label><textarea id="ct_intro_ro">Spune-ne despre evenimentul tău și te vom contacta în 24 de ore.</textarea></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Email</label><input type="text" id="ct_email" value="georgiana@si-lounge.ro"></div>
+      <div class="fld"><label>Phone</label><input type="text" id="ct_phone" value="+40 733 541 815"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>WhatsApp number (digits only)</label><input type="text" id="ct_whatsapp" value="40733541815"></div>
+      <div class="fld"><label>Hours EN</label><input type="text" id="ct_hours_en" value="Restaurant: Mon–Sun 12:00 – 23:00 | Events: by reservation"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Address EN</label><input type="text" id="ct_address_en" value="Str. George Constantinescu 2-4, București, Romania"></div>
+      <div class="fld"><label>Address RO</label><input type="text" id="ct_address_ro" value="Str. George Constantinescu 2-4, București, România"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Instagram URL</label><input type="text" id="ct_instagram" value="https://www.instagram.com/siloungecontemporary/"></div>
+      <div class="fld"><label>Facebook URL</label><input type="text" id="ct_facebook" value="https://www.facebook.com/Si.Lounge"></div>
+    </div>
+  </div>
+
+  <!-- ── PARTNERS ────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Partners (logo paths — one per line)</div>
+    <p class="hint" style="margin-bottom:0.75rem">Format: Name | images/partners/filename.png — one partner per line</p>
+    <textarea class="gallery-area" id="partners" style="min-height:200px">Kaufland Romania | images/partners/kaufland logo.png
+Heineken | images/partners/heineken logo.png
+Aperol | images/partners/5_aperol logo.png
+Coca-Cola | images/partners/10_Cocacola logo.png
+Strongbow | images/partners/4_strongbow logo.png
+Tanqueray | images/partners/tanquerey logo.png
+Jidvei | images/partners/7_jidvei logo.png
+GLO | images/partners/2_glo.png
+Le Petit | images/partners/LePetit logo.png
+Festival du Bonheur | images/partners/8_FestivalduBonheur logo.png
+Mina George | images/partners/logo-minageorge@2x.svg</textarea>
+  </div>
+
+  <!-- ── UPCOMING EVENTS ─────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Upcoming Events Sidebar (2 items)</div>
+    <div class="subcard">
+      <div class="subcard-hd">Event 1</div>
+      <div class="row2">
+        <div class="fld"><label>Title</label><input type="text" id="ue0_title" value="Movie Night: La Vita è Bella"></div>
+        <div class="fld"><label>Date display</label><input type="text" id="ue0_date" value="May 27 · 8PM"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Time / location</label><input type="text" id="ue0_time" value="8:00 PM · Garden"></div>
+        <div class="fld"><label>Image path</label><input type="text" id="ue0_image" value="images/la vita e bella.png"></div>
+      </div>
+    </div>
+    <div class="subcard">
+      <div class="subcard-hd">Event 2</div>
+      <div class="row2">
+        <div class="fld"><label>Title</label><input type="text" id="ue1_title" value="Elore Day Party"></div>
+        <div class="fld"><label>Date display</label><input type="text" id="ue1_date" value="May 30 · 2PM"></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Time / location</label><input type="text" id="ue1_time" value="2:00 PM · Garden"></div>
+        <div class="fld"><label>Image path</label><input type="text" id="ue1_image" value="images/garden empty wedding setup.jpeg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <div class="sec">
+    <div class="sec-hd">Footer</div>
+    <div class="row2">
+      <div class="fld"><label>Tagline EN</label><textarea id="footer_tagline_en">Where life, freedom and beauty meet — in the heart of Bucharest.</textarea></div>
+      <div class="fld"><label>Tagline RO</label><textarea id="footer_tagline_ro">Unde viața, libertatea și frumusețea se întâlnesc — în inima Bucureștiului.</textarea></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Copyright EN</label><input type="text" id="footer_copyright_en" value="© 2026 Si-Lounge · Str. George Constantinescu 2-4 · Bucharest"></div>
+      <div class="fld"><label>Copyright RO</label><input type="text" id="footer_copyright_ro" value="© 2026 Si-Lounge · Str. George Constantinescu 2-4 · București"></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+function v(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function lines(id) {
+  return v(id).split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+}
+
+function download() {
+  var partners = lines('partners').map(function(line) {
+    var parts = line.split('|');
+    return { name: (parts[0]||'').trim(), logo: (parts[1]||'').trim() };
+  });
+
+  var json = {
+    web3formsKey: v('web3formsKey'),
+    menuUrl: v('menuUrl'),
+    reservationsUrl: v('reservationsUrl'),
+    popupImage: v('popupImage'),
+    hero: {
+      headline_en: v('hero_headline_en'),
+      headline_ro: v('hero_headline_ro'),
+      subtext_en: v('hero_subtext_en'),
+      subtext_ro: v('hero_subtext_ro'),
+      image: v('hero_image')
+    },
+    about: {
+      heading_en: v('about_heading_en'),
+      heading_ro: v('about_heading_ro'),
+      body_en: v('about_body_en'),
+      body_ro: v('about_body_ro'),
+      baIndoorImage: v('about_baIndoorImage'),
+      baOutdoorImage: v('about_baOutdoorImage'),
+      features: [
+        {en:v('about_f0_en'),ro:v('about_f0_ro')},
+        {en:v('about_f1_en'),ro:v('about_f1_ro')},
+        {en:v('about_f3_en'),ro:v('about_f3_ro')},
+        {en:v('about_f4_en'),ro:v('about_f4_ro')},
+        {en:v('about_f5_en'),ro:v('about_f5_ro')},
+        {en:v('about_f6_en'),ro:v('about_f6_ro')}
+      ],
+      capacity: {
+        settingLabel_en:'Setting',settingLabel_ro:'Spațiu',
+        seatedLabel_en:'Seated',seatedLabel_ro:'Locuri',
+        standingLabel_en:'Standing',standingLabel_ro:'În Picioare',
+        rows:[
+          {label_en:v('cap_r0_en'),label_ro:v('cap_r0_ro'),seated:v('cap_r0_seated'),standing:v('cap_r0_standing')},
+          {label_en:v('cap_r1_en'),label_ro:v('cap_r1_ro'),seated:v('cap_r1_seated'),standing:v('cap_r1_standing')},
+          {label_en:v('cap_r2_en'),label_ro:v('cap_r2_ro'),seated:v('cap_r2_seated'),standing:v('cap_r2_standing'),highlight:true}
+        ]
+      }
+    },
+    restaurant: {
+      label_en:v('rest_label_en'),label_ro:v('rest_label_ro'),
+      heading_en:v('rest_heading_en'),heading_ro:v('rest_heading_ro'),
+      body_en:v('rest_body_en'),body_ro:v('rest_body_ro'),
+      backgroundImage:v('rest_bgImage'),mainImage:v('rest_mainImage'),
+      features:[
+        {en:v('rest_f0_en'),ro:v('rest_f0_ro')},
+        {en:v('rest_f1_en'),ro:v('rest_f1_ro')},
+        {en:v('rest_f2_en'),ro:v('rest_f2_ro')},
+        {en:v('rest_f3_en'),ro:v('rest_f3_ro')},
+        {en:v('rest_f4_en'),ro:v('rest_f4_ro')},
+        {en:v('rest_f5_en'),ro:v('rest_f5_ro')}
+      ]
+    },
+    garden: {
+      label_en:v('garden_label_en'),label_ro:v('garden_label_ro'),
+      heading_en:v('garden_heading_en'),heading_ro:v('garden_heading_ro'),
+      body_en:v('garden_body_en'),body_ro:v('garden_body_ro'),
+      features:[
+        {icon:'sun',title_en:v('gf0_title_en'),title_ro:v('gf0_title_ro'),desc_en:v('gf0_desc_en'),desc_ro:v('gf0_desc_ro')},
+        {icon:'map-pin',title_en:v('gf1_title_en'),title_ro:v('gf1_title_ro'),desc_en:v('gf1_desc_en'),desc_ro:v('gf1_desc_ro')},
+        {icon:'home',title_en:v('gf2_title_en'),title_ro:v('gf2_title_ro'),desc_en:v('gf2_desc_en'),desc_ro:v('gf2_desc_ro')}
+      ]
+    },
+    events: {
+      label_en:v('ev_label_en'),label_ro:v('ev_label_ro'),
+      heading_en:v('ev_heading_en'),heading_ro:v('ev_heading_ro'),
+      body_en:v('ev_body_en'),body_ro:v('ev_body_ro'),
+      mainCards:[
+        {image:v('ec0_image'),title_en:v('ec0_title_en'),title_ro:v('ec0_title_ro'),note_en:v('ec0_note_en'),note_ro:v('ec0_note_ro'),gallery:lines('ec0_gallery')},
+        {image:v('ec1_image'),title_en:v('ec1_title_en'),title_ro:v('ec1_title_ro'),note_en:v('ec1_note_en'),note_ro:v('ec1_note_ro'),gallery:lines('ec1_gallery')},
+        {image:v('ec2_image'),title_en:v('ec2_title_en'),title_ro:v('ec2_title_ro'),note_en:v('ec2_note_en'),note_ro:v('ec2_note_ro'),gallery:lines('ec2_gallery')}
+      ],
+      smallTiles:[
+        {name_en:v('et0_name_en'),name_ro:v('et0_name_ro'),note_en:v('et0_note_en'),note_ro:v('et0_note_ro')},
+        {name_en:v('et1_name_en'),name_ro:v('et1_name_ro'),note_en:v('et1_note_en'),note_ro:v('et1_note_ro')},
+        {name_en:v('et2_name_en'),name_ro:v('et2_name_ro'),note_en:v('et2_note_en'),note_ro:v('et2_note_ro')},
+        {name_en:v('et3_name_en'),name_ro:v('et3_name_ro'),note_en:v('et3_note_en'),note_ro:v('et3_note_ro')}
+      ]
+    },
+    reviews: {
+      label_en:v('rev_label_en'),label_ro:v('rev_label_ro'),
+      heading_en:v('rev_heading_en'),heading_ro:v('rev_heading_ro'),
+      backgroundImage:v('rev_bgImage'),
+      items:[
+        {text_en:v('rev0_text_en'),text_ro:v('rev0_text_ro'),author:v('rev0_author'),date_en:v('rev0_date_en'),date_ro:v('rev0_date_en')},
+        {text_en:v('rev1_text_en'),text_ro:v('rev1_text_ro'),author:v('rev1_author'),date_en:v('rev1_date_en'),date_ro:v('rev1_date_en')}
+      ]
+    },
+    contact: {
+      getInTouch_en:v('ct_label_en'),getInTouch_ro:v('ct_label_ro'),
+      heading_en:v('ct_heading_en'),heading_ro:v('ct_heading_ro'),
+      intro_en:v('ct_intro_en'),intro_ro:v('ct_intro_ro'),
+      email:v('ct_email'),phone:v('ct_phone'),whatsapp:v('ct_whatsapp'),
+      address_en:v('ct_address_en'),address_ro:v('ct_address_ro'),
+      hours_en:v('ct_hours_en'),hours_ro:v('ct_hours_en'),
+      instagram:v('ct_instagram'),facebook:v('ct_facebook')
+    },
+    partners: partners,
+    upcomingEvents:[
+      {title:v('ue0_title'),date:v('ue0_date'),time:v('ue0_time'),image:v('ue0_image')},
+      {title:v('ue1_title'),date:v('ue1_date'),time:v('ue1_time'),image:v('ue1_image')}
+    ],
+    footer:{
+      tagline_en:v('footer_tagline_en'),tagline_ro:v('footer_tagline_ro'),
+      copyright_en:v('footer_copyright_en'),copyright_ro:v('footer_copyright_ro')
+    }
+  };
+
+  var blob = new Blob([JSON.stringify(json, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'content.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  var t = document.getElementById('toast');
+  t.textContent = '✓ content.json downloaded — replace the file in dist/ then redeploy';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 4000);
+}
+</script>
+</body>
+</html>

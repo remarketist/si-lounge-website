@@ -1,0 +1,213 @@
+{
+  "web3formsKey": "d41bbced-c9da-4d6b-8bea-946c971e6f94",
+  "menuUrl": "https://app.greet.menu/menu/EUBbkZdHaDGboVaH",
+  "reservationsUrl": "https://ialoc.ro/restaurante-bucuresti/si-lounge-contemporary-social-rezervari-3268?brid=YWdncwHnyDjg7sShJ1c7VzfIT7wJ&experience=focus",
+  "popupImage": "images/la vita e bella pop up.jpg",
+  "hero": {
+    "headline_en": "A Jewel in the<br>Heart of <em>Bucharest</em>",
+    "headline_ro": "O Bijuterie în<br>Inima <em>Bucureștiului</em>",
+    "subtext_en": "An indoor-outdoor venue vibrating with life, freedom, and a deep sense of beauty.",
+    "subtext_ro": "Un spațiu interior-exterior care vibrează de viață, libertate și frumusețe.",
+    "image": "images/garden jewel in the heart of bucharest.jpeg"
+  },
+  "about": {
+    "heading_en": "An Indoor · Outdoor<br><em>Urban Venue</em>",
+    "heading_ro": "Un Spațiu<br><em>Interior · Exterior</em>",
+    "body_en": "An urban-friendly concept that vibrates with life, freedom, and a deep sense of well-being. Whether gathered around our restaurant tables or out under the open sky, every corner of Si-Lounge is built for moments worth remembering.",
+    "body_ro": "Un concept urban care vibrează de viață, libertate și o profundă stare de bine. Fie la mesele restaurantului, fie sub cerul liber, fiecare colț al Si-Lounge este creat pentru momente de neuitat.",
+    "image": "images/garden jewel in the heart of bucharest.jpeg",
+    "baIndoorImage": "images/si-lounge-59.jpg",
+    "baOutdoorImage": "images/garden jewel in the heart of bucharest.jpeg",
+    "features": [
+      { "en": "Restaurant &amp; terrace", "ro": "Restaurant &amp; terasă" },
+      { "en": "Garden access", "ro": "Acces grădină" },
+      { "en": "All-weather ready", "ro": "Pregătit pentru orice vreme" },
+      { "en": "In-house kitchen", "ro": "Bucătărie proprie" },
+      { "en": "Event coordination", "ro": "Coordonare evenimente" },
+      { "en": "Parking on site", "ro": "Parcare la fața locului" }
+    ],
+    "capacity": {
+      "settingLabel_en": "Setting",
+      "settingLabel_ro": "Spațiu",
+      "seatedLabel_en": "Seated",
+      "seatedLabel_ro": "Locuri",
+      "standingLabel_en": "Standing",
+      "standingLabel_ro": "În Picioare",
+      "rows": [
+        { "label_en": "Indoor Restaurant", "label_ro": "Restaurant Interior", "seated": "150", "standing": "300" },
+        { "label_en": "Garden Terrace", "label_ro": "Terasă Grădină", "seated": "300", "standing": "700" },
+        { "label_en": "Full Venue", "label_ro": "Spațiu Complet", "seated": "450+", "standing": "700+", "highlight": true }
+      ]
+    }
+  },
+  "restaurant": {
+    "label_en": "The Restaurant",
+    "label_ro": "Restaurantul",
+    "heading_en": "Open Every Day,<br><em>Always in Season</em>",
+    "heading_ro": "Deschis în Fiecare Zi,<br><em>Mereu în Sezon</em>",
+    "body_en": "Si-Lounge restaurant is open daily, welcoming guests for lunch and dinner in a setting that blends elegant indoor dining with the warmth of our outdoor terrace. Our kitchen crafts each dish from seasonal ingredients, creating a menu that changes with the rhythm of the year.",
+    "body_ro": "Restaurantul Si-Lounge este deschis zilnic, primind oaspeții la prânz și cină într-un cadru care îmbină eleganța interioară cu căldura terasei noastre. Bucătăria noastră creează fiecare preparat din ingrediente de sezon.",
+    "backgroundImage": "images/restaurant 3.jpg",
+    "mainImage": "images/restaurant 2.jpg",
+    "features": [
+      { "en": "Open Mon–Sun", "ro": "Deschis Lun–Dum" },
+      { "en": "12:00 – 23:00", "ro": "12:00 – 23:00" },
+      { "en": "Seasonal menu", "ro": "Meniu sezonier" },
+      { "en": "Private dining", "ro": "Mese private" },
+      { "en": "In-house kitchen", "ro": "Bucătărie proprie" },
+      { "en": "Parking on site", "ro": "Parcare la fața locului" }
+    ]
+  },
+  "garden": {
+    "label_en": "The Garden",
+    "label_ro": "Grădina",
+    "heading_en": "A Private<br><em>Oasis in the City</em>",
+    "heading_ro": "O Oază<br><em>Privată în Inima Orașului</em>",
+    "body_en": "A lush natural escape in the heart of Bucharest — and with our stunning indoor spaces just steps away, your event runs flawlessly regardless of the forecast. Beautiful. And bulletproof.",
+    "body_ro": "O evadare naturală în inima Bucureștiului — cu spațiile noastre interioare la câțiva pași, evenimentul tău se desfășoară impecabil indiferent de vreme.",
+    "features": [
+      {
+        "icon": "sun",
+        "title_en": "The Carousel Bar",
+        "title_ro": "Barul Carusel",
+        "desc_en": "A visually striking focal point that transforms the outdoor into a cinematic experience unlike any other venue in Bucharest.",
+        "desc_ro": "Un punct focal vizual remarcabil care transformă exteriorul într-o experiență cinematografică unică."
+      },
+      {
+        "icon": "map-pin",
+        "title_en": "Chandeliered Trees",
+        "title_ro": "Copaci cu Candelabre",
+        "desc_en": "Tall trees adorned with suspended chandeliers create a magical canopy — the backdrop your guests will never forget.",
+        "desc_ro": "Copaci înalți cu candelabre suspendate creează un baldachin magic — fundalul pe care oaspeții tăi nu îl vor uita niciodată."
+      },
+      {
+        "icon": "home",
+        "title_en": "Rain or Shine Ready",
+        "title_ro": "Pregătit pentru Orice Vreme",
+        "desc_en": "Every outdoor moment is backed by a stunning interior. Flexible flow between spaces means your event is never at the mercy of the weather.",
+        "desc_ro": "Fiecare moment în aer liber este completat de un interior spectaculos. Fluxul flexibil între spații înseamnă că evenimentul tău nu depinde niciodată de vreme."
+      }
+    ]
+  },
+  "events": {
+    "label_en": "Event Types",
+    "label_ro": "Tipuri de Evenimente",
+    "heading_en": "One Address.<br><em>Every Occasion.</em>",
+    "heading_ro": "O Adresă.<br><em>Fiecare Ocazie.</em>",
+    "body_en": "Whether your vision calls for corporate precision or intimate celebration, Si-Lounge provides the perfect configuration — indoors, outdoors, or both.",
+    "body_ro": "Indiferent dacă evenimentul tău necesită precizie corporativă sau intimitate, Si-Lounge oferă configurația perfectă — interior, exterior sau ambele.",
+    "mainCards": [
+      {
+        "image": "images/weddings.jpg",
+        "title_en": "Weddings",
+        "title_ro": "Nunți",
+        "note_en": "Ceremonies, receptions &amp; civil unions in a cinematic setting.",
+        "note_ro": "Ceremonii, recepții și cununii civile într-un cadru cinematografic.",
+        "gallery": ["images/weddings.jpg","images/weddings/wedding-site-1.jpg","images/weddings/wedding-site-2.jpg","images/weddings/wedding-site-5.jpg","images/weddings/wedding-site-6.jpg","images/weddings/wedding-site-7.jpg","images/weddings/wedding-site-8.jpg","images/weddings/wedding-site-9.jpg","images/weddings/wedding-site-3.jpg","images/weddings/poze-wedding-5.jpg","images/weddings/wedding-36a6.jpg","images/weddings/about2.jpg","images/weddings/about3.jpg","images/0772-Andreea-Mihai-Wedding-photos-Ciprian-Dumitrescu-DCF03240.jpg"]
+      },
+      {
+        "image": "images/corporate.jpeg",
+        "title_en": "Corporate",
+        "title_ro": "Corporate",
+        "note_en": "Flawless setup for conferences, product launches &amp; company galas.",
+        "note_ro": "Organizare impecabilă pentru conferințe, lansări de produse și gale de companie.",
+        "gallery": ["images/corporate.jpeg","images/corporate/CM-242.jpg","images/corporate/CM-250.jpg","images/corporate/CM-275.jpg","images/corporate/CM-249.jpg","images/corporate/CM-343.jpg","images/corporate/CM-298.jpg","images/corporate/CM-551.jpg","images/corporate/CM-422.jpg","images/corporate/about1.jpg","images/corporate/301478776_n.jpg","images/corporate/66b9789d.jpg","images/corporate/hero-326.jpg","images/product launch 1.jpg"]
+      },
+      {
+        "image": "images/garden crowded.jpg",
+        "title_en": "Private Parties",
+        "title_ro": "Petreceri Private",
+        "note_en": "Birthdays, anniversaries &amp; milestone celebrations done right.",
+        "note_ro": "Zile de naștere, aniversări și momente speciale celebrate cum se cuvine.",
+        "gallery": ["images/garden crowded.jpg","images/concerts 2.jpg","images/parties/20647214.jpg","images/parties/5e3cb8c8.jpg","images/parties/c0e76b22.jpg","images/parties/IMG_9433.jpg","images/parties/0b00e086.jpg","images/parties/27f33918.jpg","images/parties/34bb01ad.jpg","images/parties/52d090e3.jpg","images/parties/88173938_n.jpg","images/parties/92714654.jpg","images/parties/93062282.jpg","images/parties/93478334.jpg"]
+      }
+    ],
+    "smallTiles": [
+      { "name_en": "Product Launches", "name_ro": "Lansări de Produse", "note_en": "Brand activations with real visual impact.", "note_ro": "Activări de brand cu impact vizual real." },
+      { "name_en": "Fashion Shows", "name_ro": "Modă &amp; Runway", "note_en": "Architecture worthy of being your runway.", "note_ro": "Arhitectură demnă de a fi pasarela ta." },
+      { "name_en": "Concerts &amp; NYE", "name_ro": "Concerte &amp; Revelion", "note_en": "Live events with atmosphere built in.", "note_ro": "Evenimente live cu atmosferă garantată." },
+      { "name_en": "Workshops", "name_ro": "Workshopuri", "note_en": "Intimate learning environments with character.", "note_ro": "Medii de învățare intime, cu personalitate." }
+    ]
+  },
+  "reviews": {
+    "label_en": "What Clients Say",
+    "label_ro": "Ce Spun Clienții",
+    "heading_en": "Cherished by<br><em>Our Guests</em>",
+    "heading_ro": "Apreciat de<br><em>Oaspeții Noștri</em>",
+    "backgroundImage": "images/not just a venue.jpeg",
+    "items": [
+      {
+        "text_en": "\"The location is superb and everything is decorated with impeccable taste. We organised an important event at Si-Lounge and we are thrilled with our choice. Setup, service, quality of food, professionalism of staff — absolutely everything was excellent.\"",
+        "text_ro": "\"Locația este superbă și totul este decorat cu un gust impecabil. Am organizat un eveniment important la Si-Lounge și suntem încântați de alegerea noastră. Aranjamentul, serviciile, calitatea mâncării, profesionalismul personalului — absolut totul a fost excelent.\"",
+        "author": "Mihai L.",
+        "date_en": "Corporate Event · 2024",
+        "date_ro": "Eveniment Corporate · 2024"
+      },
+      {
+        "text_en": "\"We gathered all our friends at Si-Lounge for our wedding. You simply can't spoil the cool, relaxed atmosphere of the garden. The food was sensational, and the staff — attention, smiles, dedication, hospitality, professionalism. You were wonderful on the most important day of our lives.\"",
+        "text_ro": "\"Ne-am adunat toți prietenii la Si-Lounge pentru nuntă. Pur și simplu nu poți strica atmosfera răcoroasă și relaxată a grădinii. Mâncarea a fost senzațională, iar personalul — atenție, zâmbete, dedicare, ospitalitate, profesionalism. Ați fost minunați în cea mai importantă zi a vieții noastre.\"",
+        "author": "J.G. Jenig",
+        "date_en": "Wedding · 2023",
+        "date_ro": "Nuntă · 2023"
+      }
+    ]
+  },
+  "contact": {
+    "getInTouch_en": "Get in Touch",
+    "getInTouch_ro": "Contactează-ne",
+    "heading_en": "Let's Create<br><em>Something Memorable</em>",
+    "heading_ro": "Să Creăm<br><em>Ceva Memorabil</em>",
+    "intro_en": "Tell us about your event and we'll get back to you within 24 hours.",
+    "intro_ro": "Spune-ne despre evenimentul tău și te vom contacta în 24 de ore.",
+    "formTitle_en": "Tell Us About Your Event",
+    "formTitle_ro": "Spune-ne Despre Evenimentul Tău",
+    "formIntro_en": "Whether you're planning a private event, corporate gathering, or just a dinner reservation — fill in the form and we'll get back to you within 24 hours.",
+    "formIntro_ro": "Fie că planificați un eveniment privat, o reuniune corporativă sau doar o rezervare la cină — completați formularul și vă vom răspunde în maximum 24 de ore.",
+    "email": "georgiana@si-lounge.ro",
+    "phone": "+40 733 541 815",
+    "whatsapp": "40733541815",
+    "address_en": "Str. George Constantinescu 2-4<br>București, Romania",
+    "address_ro": "Str. George Constantinescu 2-4<br>București, România",
+    "hours_en": "Restaurant: Mon–Sun 12:00 – 23:00<br>Events: by reservation",
+    "hours_ro": "Restaurant: Luni–Dum 12:00 – 23:00<br>Evenimente: cu rezervare",
+    "instagram": "https://www.instagram.com/siloungecontemporary/",
+    "facebook": "https://www.facebook.com/Si.Lounge"
+  },
+  "partners": [
+    { "name": "Kaufland Romania", "logo": "images/partners/kaufland logo.png" },
+    { "name": "Heineken", "logo": "images/partners/heineken logo.png" },
+    { "name": "Aperol", "logo": "images/partners/5_aperol logo.png" },
+    { "name": "Coca-Cola", "logo": "images/partners/10_Cocacola logo.png" },
+    { "name": "Strongbow", "logo": "images/partners/4_strongbow logo.png" },
+    { "name": "Tanqueray", "logo": "images/partners/tanquerey logo.png" },
+    { "name": "Jidvei", "logo": "images/partners/7_jidvei logo.png" },
+    { "name": "GLO", "logo": "images/partners/2_glo.png" },
+    { "name": "Le Petit", "logo": "images/partners/LePetit logo.png" },
+    { "name": "Festival du Bonheur", "logo": "images/partners/8_FestivalduBonheur logo.png" },
+    { "name": "Mina George", "logo": "images/partners/logo-minageorge@2x.svg" }
+  ],
+  "upcomingEvents": [
+    {
+      "title": "Movie Night: La Vita è Bella",
+      "date": "May 27 · 8PM",
+      "time": "8:00 PM · Garden",
+      "image": "images/la vita e bella.png",
+      "width": 150,
+      "height": 225
+    },
+    {
+      "title": "Elore Day Party",
+      "date": "May 30 · 2PM",
+      "time": "2:00 PM · Garden",
+      "image": "images/garden empty wedding setup.jpeg",
+      "width": 150,
+      "height": 100
+    }
+  ],
+  "footer": {
+    "tagline_en": "Where life, freedom and beauty meet — in the heart of Bucharest.",
+    "tagline_ro": "Unde viața, libertatea și frumusețea se întâlnesc — în inima Bucureștiului.",
+    "copyright_en": "© 2026 Si-Lounge · Str. George Constantinescu 2-4 · Bucharest",
+    "copyright_ro": "© 2026 Si-Lounge · Str. George Constantinescu 2-4 · București"
+  }
+}
